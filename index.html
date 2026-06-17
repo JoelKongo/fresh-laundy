@@ -23,6 +23,8 @@
             --card-shadow: 0 12px 30px rgba(11, 94, 215, 0.12);
             --radius: 18px;
             --max-width: 1180px;
+            --danger: #dc2626;
+            --success: #15803d;
         }
 
         * {
@@ -414,7 +416,8 @@
         }
 
         .booking-card,
-        .contact-card {
+        .contact-card,
+        .map-card {
             background: var(--white);
             border: 1px solid rgba(15, 23, 42, 0.08);
             border-radius: 24px;
@@ -423,7 +426,8 @@
         }
 
         .booking-card h3,
-        .contact-card h3 {
+        .contact-card h3,
+        .map-card h3 {
             margin-bottom: 14px;
             font-size: 1.5rem;
             color: var(--primary-dark);
@@ -431,7 +435,8 @@
 
         .booking-card p,
         .contact-card p,
-        .contact-card a {
+        .contact-card a,
+        .map-card p {
             color: var(--muted);
         }
 
@@ -459,6 +464,30 @@
             background: #fff;
         }
 
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 2px solid rgba(11, 94, 215, 0.2);
+            border-color: var(--primary);
+        }
+
+        .field-error {
+            border-color: var(--danger) !important;
+            background: #fff5f5;
+        }
+
+        .error-text {
+            color: var(--danger);
+            font-size: 0.9rem;
+            margin-top: -6px;
+        }
+
+        .success-text {
+            color: var(--success);
+            font-size: 0.95rem;
+            margin-top: 8px;
+        }
+
         textarea {
             min-height: 130px;
             resize: vertical;
@@ -468,6 +497,27 @@
             margin-top: 16px;
             color: var(--muted);
             font-size: 0.95rem;
+        }
+
+        .map-grid,
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        .map-embed {
+            overflow: hidden;
+            border-radius: 18px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            min-height: 320px;
+        }
+
+        .map-embed iframe {
+            width: 100%;
+            height: 320px;
+            border: 0;
         }
 
         .contact {
@@ -481,13 +531,6 @@
         .contact .contact-card p,
         .contact .contact-card a {
             color: var(--white);
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 24px;
-            align-items: stretch;
         }
 
         .contact-card {
@@ -537,6 +580,7 @@
             .hero-grid,
             .about-grid,
             .booking-grid,
+            .map-grid,
             .contact-grid,
             .gallery-grid {
                 grid-template-columns: 1fr;
@@ -579,6 +623,7 @@
                 <a href="#gallery">Gallery</a>
                 <a href="#testimonials">Testimonials</a>
                 <a href="#booking">Booking</a>
+                <a href="#map">Location</a>
                 <a href="#contact">Contact</a>
                 <a class="nav-cta" href="https://wa.me/27753047083" target="_blank" rel="noopener noreferrer">WhatsApp Us</a>
             </nav>
@@ -837,7 +882,7 @@
             <div>
                 <div class="section-head" style="text-align:left; margin:0 0 20px;">
                     <h2>Book a Service</h2>
-                    <p>Send your booking request and we will get back to you to confirm the details.</p>
+                    <p>Send your booking request and choose whether to continue by WhatsApp or email.</p>
                 </div>
                 <div class="about-box">
                     <h3 style="margin-bottom:14px; color: var(--primary-dark);">Why Book With Us?</h3>
@@ -853,14 +898,14 @@
             <div class="booking-card">
                 <h3>Booking Form</h3>
                 <p>Fill in your details below to request a laundry service.</p>
-                <form>
+                <form id="bookingForm" novalidate>
                     <div class="form-row">
-                        <input type="text" name="name" placeholder="Full Name" required />
-                        <input type="tel" name="phone" placeholder="Phone Number" required />
+                        <input type="text" id="name" name="name" placeholder="Full Name" required />
+                        <input type="tel" id="phone" name="phone" placeholder="Phone Number" required />
                     </div>
                     <div class="form-row">
-                        <input type="email" name="email" placeholder="Email Address" required />
-                        <select name="service" required>
+                        <input type="email" id="email" name="email" placeholder="Email Address" required />
+                        <select id="service" name="service" required>
                             <option value="">Select Service</option>
                             <option>Wash & Fold</option>
                             <option>Ironing Service</option>
@@ -870,20 +915,56 @@
                         </select>
                     </div>
                     <div class="form-row">
-                        <input type="date" name="date" required />
-                        <select name="package">
+                        <input type="date" id="date" name="date" required />
+                        <select id="package" name="package">
                             <option value="">Select Package</option>
                             <option>Basic Care</option>
                             <option>Family Bundle</option>
                             <option>Premium Garment Care</option>
                         </select>
                     </div>
-                    <textarea name="message" placeholder="Tell us what you need, your address, and any special garment instructions."></textarea>
-                    <button type="submit" class="btn btn-primary">Send Booking Request</button>
+                    <textarea id="message" name="message" placeholder="Tell us what you need, your address, and any special garment instructions."></textarea>
+                    <div class="form-row">
+                        <button type="button" class="btn btn-whatsapp" id="whatsappBtn">Send via WhatsApp</button>
+                        <button type="button" class="btn btn-primary" id="emailBtn">Send via Email</button>
+                    </div>
+                    <div id="formFeedback" aria-live="polite"></div>
                 </form>
                 <p class="booking-note">
-                    Prefer a faster response? <a href="https://wa.me/27753047083" target="_blank" rel="noopener noreferrer">Message us on WhatsApp</a>.
+                    The form validates your details before opening WhatsApp or your email app.
                 </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="map">
+        <div class="container">
+            <div class="section-head">
+                <h2>Find Us</h2>
+                <p>Visit our location in Goodwood or open directions in Google Maps.</p>
+            </div>
+
+            <div class="map-grid">
+                <div class="map-card">
+                    <h3>Fresh Laundry Location</h3>
+                    <p>
+                        245 Voortrekker Road,<br />
+                        Vasco Estate, Goodwood
+                    </p>
+                    <div class="contact-actions">
+                        <a href="https://maps.google.com/?q=245%20Voortrekker%20Road%2C%20Vasco%20Estate%2C%20Goodwood" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
+                        <a href="https://wa.me/27753047083" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">Ask on WhatsApp</a>
+                    </div>
+                </div>
+                <div class="map-embed">
+                    <iframe
+                        title="Fresh Laundry Map"
+                        loading="lazy"
+                        allowfullscreen
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps?q=245%20Voortrekker%20Road%2C%20Vasco%20Estate%2C%20Goodwood&output=embed">
+                    </iframe>
+                </div>
             </div>
         </div>
     </section>
@@ -927,5 +1008,113 @@
     <footer>
         <p>© 2026 Fresh Laundry. We Clean. You Live.</p>
     </footer>
+
+    <script>
+        const form = document.getElementById('bookingForm');
+        const whatsappBtn = document.getElementById('whatsappBtn');
+        const emailBtn = document.getElementById('emailBtn');
+        const feedback = document.getElementById('formFeedback');
+        const fields = ['name', 'phone', 'email', 'service', 'date'];
+
+        function clearErrors() {
+            feedback.innerHTML = '';
+            document.querySelectorAll('.field-error').forEach((field) => field.classList.remove('field-error'));
+            document.querySelectorAll('.error-text').forEach((error) => error.remove());
+        }
+
+        function showError(field, message) {
+            field.classList.add('field-error');
+            const error = document.createElement('div');
+            error.className = 'error-text';
+            error.textContent = message;
+            field.insertAdjacentElement('afterend', error);
+        }
+
+        function validateForm() {
+            clearErrors();
+
+            const name = document.getElementById('name');
+            const phone = document.getElementById('phone');
+            const email = document.getElementById('email');
+            const service = document.getElementById('service');
+            const date = document.getElementById('date');
+
+            let isValid = true;
+            const phonePattern = /^[+0-9\s()-]{7,}$/;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!name.value.trim()) {
+                showError(name, 'Please enter your full name.');
+                isValid = false;
+            }
+
+            if (!phone.value.trim()) {
+                showError(phone, 'Please enter your phone number.');
+                isValid = false;
+            } else if (!phonePattern.test(phone.value.trim())) {
+                showError(phone, 'Please enter a valid phone number.');
+                isValid = false;
+            }
+
+            if (!email.value.trim()) {
+                showError(email, 'Please enter your email address.');
+                isValid = false;
+            } else if (!emailPattern.test(email.value.trim())) {
+                showError(email, 'Please enter a valid email address.');
+                isValid = false;
+            }
+
+            if (!service.value) {
+                showError(service, 'Please select a service.');
+                isValid = false;
+            }
+
+            if (!date.value) {
+                showError(date, 'Please select a booking date.');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                feedback.innerHTML = '<div class="error-text">Please correct the highlighted fields and try again.</div>';
+            }
+
+            return isValid;
+        }
+
+        function collectFormData() {
+            return {
+                name: document.getElementById('name').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                service: document.getElementById('service').value,
+                date: document.getElementById('date').value,
+                packageType: document.getElementById('package').value || 'Not selected',
+                message: document.getElementById('message').value.trim() || 'No additional notes provided.'
+            };
+        }
+
+        function buildBookingMessage(data) {
+            return `Fresh Laundry Booking Request%0A%0AName: ${encodeURIComponent(data.name)}%0APhone: ${encodeURIComponent(data.phone)}%0AEmail: ${encodeURIComponent(data.email)}%0AService: ${encodeURIComponent(data.service)}%0APackage: ${encodeURIComponent(data.packageType)}%0APreferred Date: ${encodeURIComponent(data.date)}%0AMessage: ${encodeURIComponent(data.message)}`;
+        }
+
+        whatsappBtn.addEventListener('click', function () {
+            if (!validateForm()) return;
+            const data = collectFormData();
+            const message = buildBookingMessage(data);
+            window.open(`https://wa.me/27753047083?text=${message}`, '_blank');
+            feedback.innerHTML = '<div class="success-text">Opening WhatsApp with your booking details.</div>';
+        });
+
+        emailBtn.addEventListener('click', function () {
+            if (!validateForm()) return;
+            const data = collectFormData();
+            const subject = encodeURIComponent('Fresh Laundry Booking Request');
+            const body = encodeURIComponent(
+                `Name: ${data.name}\nPhone: ${data.phone}\nEmail: ${data.email}\nService: ${data.service}\nPackage: ${data.packageType}\nPreferred Date: ${data.date}\nMessage: ${data.message}`
+            );
+            window.location.href = `mailto:freshlaundryct@gmail.com?subject=${subject}&body=${body}`;
+            feedback.innerHTML = '<div class="success-text">Opening your email app with the booking details.</div>';
+        });
+    </script>
 </body>
 </html>
