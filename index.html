@@ -110,7 +110,7 @@
         nav {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
         }
 
@@ -122,12 +122,17 @@
             padding: 12px 18px;
             border-radius: 999px;
             box-shadow: var(--card-shadow);
-            transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+            transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
         }
 
         nav a:hover {
             transform: translateY(-2px);
             opacity: 0.96;
+        }
+
+        nav a.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            box-shadow: 0 16px 32px rgba(15, 47, 109, 0.22);
         }
 
         .nav-cta {
@@ -729,11 +734,18 @@
             .nav-wrap {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 14px;
             }
 
             nav {
                 width: 100%;
                 justify-content: flex-start;
+                gap: 8px;
+            }
+
+            nav a {
+                padding: 10px 14px;
+                font-size: 0.88rem;
             }
 
             .hero-points,
@@ -1197,6 +1209,11 @@
         const whatsappBtn = document.getElementById('whatsappBtn');
         const emailBtn = document.getElementById('emailBtn');
         const formFeedback = document.getElementById('formFeedback');
+        const navLinks = Array.from(document.querySelectorAll('header nav a[href^="#"]'));
+        const sectionIds = navLinks.map((link) => link.getAttribute('href')).filter(Boolean);
+        const trackedSections = sectionIds
+            .map((href) => document.querySelector(href))
+            .filter((section) => section);
 
         function clearFeedback() {
             formFeedback.textContent = '';
@@ -1280,6 +1297,40 @@
             window.location.href = 'mailto:support.freshlaundry@gmail.com?subject=' + subject + '&body=' + body;
             showFeedback('Opening your email app with your booking request.', 'success');
         });
+
+        function setActiveNavLink(id) {
+            navLinks.forEach((link) => {
+                const isActive = link.getAttribute('href') === '#' + id;
+                link.classList.toggle('active', isActive);
+            });
+        }
+
+        function updateActiveSection() {
+            const scrollPosition = window.scrollY + 160;
+            let currentSection = trackedSections[0];
+
+            trackedSections.forEach((section) => {
+                if (section.offsetTop <= scrollPosition) {
+                    currentSection = section;
+                }
+            });
+
+            if (currentSection && currentSection.id) {
+                setActiveNavLink(currentSection.id);
+            }
+        }
+
+        navLinks.forEach((link) => {
+            link.addEventListener('click', () => {
+                const targetId = link.getAttribute('href').replace('#', '');
+                if (targetId) {
+                    setActiveNavLink(targetId);
+                }
+            });
+        });
+
+        window.addEventListener('scroll', updateActiveSection, { passive: true });
+        window.addEventListener('load', updateActiveSection);
     </script>
 </body>
 </html>
