@@ -110,26 +110,29 @@
         nav {
             display: flex;
             flex-wrap: wrap;
-            gap: 18px;
+            gap: 12px;
             align-items: center;
         }
 
         nav a {
-            color: var(--text);
+            color: var(--white);
             font-weight: 700;
             font-size: 0.95rem;
-        }
-
-        nav a:hover {
-            color: var(--secondary);
-        }
-
-        .nav-cta {
             background: linear-gradient(135deg, var(--secondary), #74bdf1);
-            color: var(--white);
             padding: 12px 18px;
             border-radius: 999px;
             box-shadow: var(--card-shadow);
+            transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+        }
+
+        nav a:hover {
+            transform: translateY(-2px);
+            opacity: 0.96;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
         }
 
         .hero {
@@ -303,12 +306,29 @@
         }
 
         .card,
-        .image-card {
+        .image-card,
+        .price-card,
+        .gallery-item,
+        .flyer-item,
+        .testimonial,
+        .booking-card,
+        .contact-card,
+        .map-card,
+        .about-box {
             background: var(--white);
-            padding: 28px;
-            border-radius: var(--radius);
+            border-radius: 24px;
             box-shadow: var(--card-shadow);
-            border: 1px solid rgba(15, 47, 109, 0.06);
+            border: 1px solid rgba(15, 47, 109, 0.08);
+        }
+
+        .card,
+        .image-card,
+        .testimonial,
+        .booking-card,
+        .contact-card,
+        .map-card,
+        .about-box {
+            padding: 28px;
         }
 
         .card h3,
@@ -323,17 +343,20 @@
         }
 
         .pricing,
-        .flyer-section {
+        .flyer-section,
+        .booking,
+        .about,
+        #gallery,
+        #map,
+        #contact,
+        #services,
+        #testimonials {
             background: var(--bg-soft);
         }
 
         .price-card {
             position: relative;
-            background: var(--white);
             padding: 30px;
-            border-radius: 22px;
-            box-shadow: var(--card-shadow);
-            border: 1px solid rgba(15, 47, 109, 0.08);
         }
 
         .price-card.featured {
@@ -368,10 +391,6 @@
             color: var(--muted);
         }
 
-        .about {
-            background: var(--bg);
-        }
-
         .about-grid,
         .booking-grid {
             display: grid;
@@ -383,14 +402,6 @@
         .about-text p {
             color: var(--muted);
             margin-bottom: 16px;
-        }
-
-        .about-box {
-            background: linear-gradient(180deg, #ffffff, #edf7ff);
-            border-radius: 24px;
-            padding: 28px;
-            box-shadow: var(--card-shadow);
-            border: 1px solid rgba(78, 163, 232, 0.12);
         }
 
         .about-box ul {
@@ -411,16 +422,19 @@
 
         .gallery-item,
         .flyer-item {
-            background: var(--white);
-            border-radius: 20px;
             overflow: hidden;
-            box-shadow: var(--card-shadow);
-            border: 1px solid rgba(15, 47, 109, 0.05);
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
         .gallery-item:hover,
-        .flyer-item:hover {
+        .flyer-item:hover,
+        .card:hover,
+        .price-card:hover,
+        .testimonial:hover,
+        .booking-card:hover,
+        .contact-card:hover,
+        .map-card:hover,
+        .about-box:hover {
             transform: translateY(-6px);
             box-shadow: 0 18px 36px rgba(15, 47, 109, 0.18);
         }
@@ -483,55 +497,18 @@
         }
 
         .gallery-caption p,
-        .flyer-caption p {
-            color: var(--muted);
-            font-size: 0.95rem;
-        }
-
-        .testimonial {
-            background: var(--white);
-            padding: 26px;
-            border-radius: 20px;
-            box-shadow: var(--card-shadow);
-            border: 1px solid rgba(15, 47, 109, 0.05);
-        }
-
-        .testimonial p {
-            color: var(--muted);
-            margin-bottom: 14px;
-        }
-
-        .testimonial strong {
-            color: var(--primary-dark);
-        }
-
-        .booking {
-            background: linear-gradient(180deg, #ffffff, #f3faff);
-        }
-
-        .booking-card,
-        .contact-card,
-        .map-card {
-            background: var(--white);
-            border: 1px solid rgba(15, 47, 109, 0.08);
-            border-radius: 24px;
-            padding: 28px;
-            box-shadow: var(--card-shadow);
-        }
-
-        .booking-card h3,
-        .contact-card h3,
-        .map-card h3 {
-            margin-bottom: 14px;
-            font-size: 1.5rem;
-            color: var(--primary-dark);
-        }
-
+        .flyer-caption p,
+        .testimonial p,
         .booking-card p,
         .contact-card p,
         .contact-card a,
         .map-card p {
             color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .testimonial strong {
+            color: var(--primary-dark);
         }
 
         form {
@@ -606,6 +583,8 @@
             border-radius: 18px;
             border: 1px solid rgba(15, 47, 109, 0.08);
             min-height: 320px;
+            box-shadow: var(--card-shadow);
+            background: var(--white);
         }
 
         .map-embed iframe {
@@ -615,8 +594,7 @@
         }
 
         .contact {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-            color: var(--white);
+            color: var(--text);
         }
 
         .contact .section-head h2,
@@ -624,12 +602,7 @@
         .contact .contact-card h3,
         .contact .contact-card p,
         .contact .contact-card a {
-            color: var(--white);
-        }
-
-        .contact-card {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.14);
+            color: inherit;
         }
 
         .contact-links {
@@ -640,9 +613,10 @@
 
         .contact-links a {
             display: block;
-            background: rgba(255,255,255,0.12);
+            background: var(--secondary-soft);
             padding: 14px 16px;
             border-radius: 14px;
+            color: var(--primary-dark) !important;
         }
 
         .contact-actions {
@@ -655,6 +629,7 @@
         .btn-light {
             background: var(--white);
             color: var(--primary-dark) !important;
+            border: 1px solid rgba(15, 47, 109, 0.12);
         }
 
         .btn-whatsapp {
@@ -1223,12 +1198,6 @@
         const emailBtn = document.getElementById('emailBtn');
         const formFeedback = document.getElementById('formFeedback');
 
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImage = document.getElementById('lightboxImage');
-        const lightboxCaption = document.getElementById('lightboxCaption');
-        const lightboxClose = document.getElementById('lightboxClose');
-        const lightboxTriggers = document.querySelectorAll('.js-lightbox-trigger');
-
         function clearFeedback() {
             formFeedback.textContent = '';
             formFeedback.className = '';
@@ -1310,51 +1279,6 @@
             const body = encodeURIComponent(buildMessage());
             window.location.href = 'mailto:support.freshlaundry@gmail.com?subject=' + subject + '&body=' + body;
             showFeedback('Opening your email app with your booking request.', 'success');
-        });
-
-        function openLightbox(src, title, description, alt) {
-            lightboxImage.src = src;
-            lightboxImage.alt = alt || title || 'Preview image';
-            lightboxCaption.innerHTML = '<strong>' + (title || 'Image preview') + '</strong><span>' + (description || '') + '</span>';
-            lightbox.classList.add('active');
-            lightbox.setAttribute('aria-hidden', 'false');
-            document.body.classList.add('lightbox-open');
-        }
-
-        function closeLightbox() {
-            lightbox.classList.remove('active');
-            lightbox.setAttribute('aria-hidden', 'true');
-            document.body.classList.remove('lightbox-open');
-            lightboxImage.src = '';
-            lightboxImage.alt = '';
-            lightboxCaption.innerHTML = '';
-        }
-
-        lightboxTriggers.forEach((trigger) => {
-            trigger.addEventListener('click', (event) => {
-                event.preventDefault();
-                const img = trigger.querySelector('img');
-                openLightbox(
-                    trigger.getAttribute('href'),
-                    trigger.dataset.title,
-                    trigger.dataset.description,
-                    img ? img.getAttribute('alt') : 'Preview image'
-                );
-            });
-        });
-
-        lightboxClose.addEventListener('click', closeLightbox);
-
-        lightbox.addEventListener('click', (event) => {
-            if (event.target === lightbox) {
-                closeLightbox();
-            }
-        });
-
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && lightbox.classList.contains('active')) {
-                closeLightbox();
-            }
         });
     </script>
 </body>
