@@ -23,6 +23,7 @@
             --border: rgba(15, 47, 109, 0.12);
             --card-shadow: 0 14px 30px rgba(15, 47, 109, 0.12);
             --radius: 22px;
+            --max-width: 1180px;
             --danger: #dc2626;
             --success: #15803d;
         }
@@ -44,8 +45,16 @@
             line-height: 1.6;
         }
 
+        body.lightbox-open {
+            overflow: hidden;
+        }
+
         a {
             text-decoration: none;
+        }
+
+        button {
+            font: inherit;
         }
 
         img {
@@ -286,7 +295,8 @@
         .pricing-grid,
         .testimonial-grid,
         .image-feature-grid,
-        .flyer-grid {
+        .flyer-grid,
+        .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 22px;
@@ -392,15 +402,11 @@
             margin-top: 10px;
         }
 
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 18px;
-        }
-
-        .flyer-link {
+        .flyer-link,
+        .gallery-link {
             display: block;
             color: inherit;
+            cursor: pointer;
         }
 
         .gallery-item,
@@ -434,7 +440,8 @@
             background: #fff;
         }
 
-        .flyer-caption-top {
+        .flyer-caption-top,
+        .gallery-caption-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -442,7 +449,8 @@
             margin-bottom: 8px;
         }
 
-        .flyer-tag {
+        .flyer-tag,
+        .gallery-tag {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -455,7 +463,8 @@
             white-space: nowrap;
         }
 
-        .flyer-cta {
+        .flyer-cta,
+        .gallery-cta {
             display: inline-block;
             margin-top: 14px;
             color: var(--primary);
@@ -653,6 +662,70 @@
             color: var(--white) !important;
         }
 
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 35, 82, 0.92);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+            z-index: 2000;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .lightbox-content {
+            position: relative;
+            width: min(100%, 980px);
+            max-height: 90vh;
+            display: grid;
+            gap: 14px;
+            justify-items: center;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 74vh;
+            border-radius: 20px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+            background: #fff;
+        }
+
+        .lightbox-caption {
+            color: var(--white);
+            text-align: center;
+            max-width: 760px;
+        }
+
+        .lightbox-caption strong {
+            display: block;
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: var(--white);
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+            line-height: 1;
+            cursor: pointer;
+            box-shadow: var(--card-shadow);
+        }
+
         footer {
             background: #0a2352;
             color: rgba(255,255,255,0.9);
@@ -689,17 +762,14 @@
             }
 
             .hero-points,
-            .form-row,
-            .flyer-caption-top {
+            .form-row {
                 grid-template-columns: 1fr;
             }
 
-            .flyer-caption-top {
-                display: block;
-            }
-
-            .flyer-tag {
-                margin-top: 8px;
+            .flyer-caption-top,
+            .gallery-caption-top {
+                flex-direction: column;
+                align-items: flex-start;
             }
 
             .section-head h2 {
@@ -713,6 +783,15 @@
             .logo img {
                 width: 46px;
                 height: 46px;
+            }
+
+            .lightbox {
+                padding: 16px;
+            }
+
+            .lightbox-close {
+                top: -4px;
+                right: -4px;
             }
         }
     </style>
@@ -787,12 +866,12 @@
         <div class="container">
             <div class="section-head">
                 <h2>Our Brand Flyers</h2>
-                <p>Browse our latest service and pricing flyers. Tap or click any flyer to open the full-size version.</p>
+                <p>Browse our latest service and pricing flyers. Tap or click any flyer to open it in the page.</p>
             </div>
 
             <div class="flyer-grid">
                 <div class="flyer-item">
-                    <a class="flyer-link" href="assets/flyer-services.jpg" target="_blank" rel="noopener noreferrer">
+                    <a class="flyer-link js-lightbox-trigger" href="assets/flyer-services.jpg" data-title="Promotional Flyer" data-description="Highlights our services, why customers choose us, and our contact details.">
                         <img src="assets/flyer-services.jpg" alt="Fresh Laundry promotional flyer" />
                         <div class="flyer-caption">
                             <div class="flyer-caption-top">
@@ -800,12 +879,12 @@
                                 <span class="flyer-tag">Services</span>
                             </div>
                             <p>Highlights our services, why customers choose us, and our contact details.</p>
-                            <span class="flyer-cta">Open full size →</span>
+                            <span class="flyer-cta">Open preview →</span>
                         </div>
                     </a>
                 </div>
                 <div class="flyer-item">
-                    <a class="flyer-link" href="assets/flyer-prices.jpeg" target="_blank" rel="noopener noreferrer">
+                    <a class="flyer-link js-lightbox-trigger" href="assets/flyer-prices.jpeg" data-title="Laundry Price List" data-description="Showcases basket pricing, ironing add-ons, and launch specials.">
                         <img src="assets/flyer-prices.jpeg" alt="Fresh Laundry price list flyer" />
                         <div class="flyer-caption">
                             <div class="flyer-caption-top">
@@ -813,12 +892,470 @@
                                 <span class="flyer-tag">Pricing</span>
                             </div>
                             <p>Showcases basket pricing, ironing add-ons, and launch specials.</p>
-                            <span class="flyer-cta">Open full size →</span>
+                            <span class="flyer-cta">Open preview →</span>
                         </div>
                     </a>
                 </div>
             </div>
         </div>
     </section>
+
+    <section id="services">
+        <div class="container">
+            <div class="section-head">
+                <h2>Our Services</h2>
+                <p>
+                    Quality service inspired by the same clean, trustworthy feel of our flyer branding.
+                </p>
+            </div>
+
+            <div class="services-grid">
+                <div class="card">
+                    <h3>Wash & Fold</h3>
+                    <p>Everyday laundry professionally washed, dried, and neatly folded.</p>
+                </div>
+                <div class="card">
+                    <h3>Ironing Service</h3>
+                    <p>Neat, crisp garments finished wrinkle-free and ready to wear.</p>
+                </div>
+                <div class="card">
+                    <h3>Dry Cleaning</h3>
+                    <p>Gentle care for delicate fabrics, formal wear, and special garments.</p>
+                </div>
+                <div class="card">
+                    <h3>Linen & Household</h3>
+                    <p>From bedding to curtains, we’ve got your household fabrics covered.</p>
+                </div>
+                <div class="card">
+                    <h3>Pickup & Delivery</h3>
+                    <p>Convenient collection and delivery for busy homes and professionals.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <div class="section-head">
+                <h2>Pricing Packages</h2>
+                <p>
+                    Updated to reflect the flyer pricing style and launch special theme.
+                </p>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <h3>Medium Basket</h3>
+                    <div class="price">R100</div>
+                    <p>Ideal for small to medium weekly laundry loads.</p>
+                    <ul>
+                        <li>Wash & Fold — R100</li>
+                        <li>Ironing add-on — +R30</li>
+                        <li>Wash, Fold & Iron — R130</li>
+                    </ul>
+                    <a href="#booking" class="btn btn-primary">Choose Package</a>
+                </div>
+
+                <div class="price-card featured">
+                    <div class="price-badge">Popular</div>
+                    <h3>Large Basket</h3>
+                    <div class="price">R150</div>
+                    <p>Best for larger household laundry needs.</p>
+                    <ul>
+                        <li>Wash & Fold — R150</li>
+                        <li>Ironing add-on — +R50</li>
+                        <li>Wash, Fold & Iron — R200</li>
+                    </ul>
+                    <a href="#booking" class="btn btn-primary">Choose Package</a>
+                </div>
+
+                <div class="price-card">
+                    <h3>Launch Special</h3>
+                    <div class="price">From R100</div>
+                    <p>Special first-load promotion for new customers.</p>
+                    <ul>
+                        <li>Medium Basket Wash, Fold & Iron — R100</li>
+                        <li>Large Basket Wash, Fold & Iron — R150</li>
+                        <li>Limited launch special pricing</li>
+                    </ul>
+                    <a href="#booking" class="btn btn-primary">Claim Special</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container about-grid">
+            <div class="about-text">
+                <div class="section-head" style="text-align:left; margin:0 0 20px;">
+                    <h2>About Fresh Laundry</h2>
+                    <p>Clean clothes. Fresh confidence. Clean you can trust.</p>
+                </div>
+                <p>
+                    Fresh Laundry is a trusted laundry and dry-cleaning service serving Goodwood and surrounding areas.
+                    We focus on quality care, fast turnaround, friendly service, and convenient support.
+                </p>
+                <p>
+                    Whether it’s weekly laundry, work uniforms, bedding, or delicate garments,
+                    every item is handled with care and returned fresh, clean, and ready to use.
+                </p>
+            </div>
+            <div class="about-box">
+                <h3 style="margin-bottom:14px; color: var(--primary-dark);">Why Choose Us?</h3>
+                <ul>
+                    <li>Quality care — we treat every item like our own</li>
+                    <li>Affordable prices without the premium price</li>
+                    <li>Fast turnaround when you need it most</li>
+                    <li>Friendly service that makes life easier</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="container">
+            <div class="section-head">
+                <h2>Gallery</h2>
+                <p>Take a look at the clean, fresh, and professional experience we offer.</p>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <a class="gallery-link js-lightbox-trigger" href="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&w=1600&q=80" data-title="Freshly Folded Laundry" data-description="Neat, clean, and ready for pickup or delivery.">
+                        <img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&w=900&q=80" alt="Freshly folded laundry" />
+                        <div class="gallery-caption">
+                            <div class="gallery-caption-top">
+                                <h3>Freshly Folded Laundry</h3>
+                                <span class="gallery-tag">Laundry Care</span>
+                            </div>
+                            <p>Neat, clean, and ready for pickup or delivery.</p>
+                            <span class="gallery-cta">Open preview →</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="gallery-item">
+                    <a class="gallery-link js-lightbox-trigger" href="https://images.unsplash.com/photo-1521656693074-0ef32e80a5d5?auto=format&fit=crop&w=1600&q=80" data-title="Professional Cleaning Process" data-description="Reliable equipment and careful handling for every load.">
+                        <img src="https://images.unsplash.com/photo-1521656693074-0ef32e80a5d5?auto=format&fit=crop&w=900&q=80" alt="Laundry machines in service" />
+                        <div class="gallery-caption">
+                            <div class="gallery-caption-top">
+                                <h3>Professional Cleaning Process</h3>
+                                <span class="gallery-tag">Behind the Scenes</span>
+                            </div>
+                            <p>Reliable equipment and careful handling for every load.</p>
+                            <span class="gallery-cta">Open preview →</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="gallery-item">
+                    <a class="gallery-link js-lightbox-trigger" href="https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?auto=format&fit=crop&w=1600&q=80" data-title="Ready-to-Wear Results" data-description="Perfect for busy families, professionals, and small businesses.">
+                        <img src="https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?auto=format&fit=crop&w=900&q=80" alt="Clean clothes ready to wear" />
+                        <div class="gallery-caption">
+                            <div class="gallery-caption-top">
+                                <h3>Ready-to-Wear Results</h3>
+                                <span class="gallery-tag">Finished Results</span>
+                            </div>
+                            <p>Perfect for busy families, professionals, and small businesses.</p>
+                            <span class="gallery-cta">Open preview →</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="pricing">
+        <div class="container">
+            <div class="section-head">
+                <h2>What Our Customers Say</h2>
+                <p>We are proud to provide trusted service that keeps customers coming back.</p>
+            </div>
+
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <p>“Fresh Laundry always delivers on time, and my clothes come back spotless and neatly folded.”</p>
+                    <strong>— Nandi M.</strong>
+                </div>
+                <div class="testimonial">
+                    <p>“Their pickup and delivery service makes life so much easier. Friendly team and great quality.”</p>
+                    <strong>— Jason R.</strong>
+                </div>
+                <div class="testimonial">
+                    <p>“I trust them with delicate garments and bedding. The service is professional and affordable.”</p>
+                    <strong>— Fatima K.</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="booking" class="booking">
+        <div class="container booking-grid">
+            <div>
+                <div class="section-head" style="text-align:left; margin:0 0 20px;">
+                    <h2>Book a Service</h2>
+                    <p>Send your booking request and choose whether to continue by WhatsApp or email.</p>
+                </div>
+                <div class="about-box">
+                    <h3 style="margin-bottom:14px; color: var(--primary-dark);">Why Book With Us?</h3>
+                    <ul>
+                        <li>Quick response for booking requests</li>
+                        <li>Flexible options for pickup and drop-off</li>
+                        <li>Packages for individuals, families, and businesses</li>
+                        <li>Direct support on WhatsApp for urgent requests</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="booking-card">
+                <h3>Booking Form</h3>
+                <p>Fill in your details below to request a laundry service.</p>
+                <form id="bookingForm" novalidate>
+                    <div class="form-row">
+                        <input type="text" id="name" name="name" placeholder="Full Name" required />
+                        <input type="tel" id="phone" name="phone" placeholder="Phone Number" required />
+                    </div>
+                    <div class="form-row">
+                        <input type="email" id="email" name="email" placeholder="Email Address" required />
+                        <select id="service" name="service" required>
+                            <option value="">Select Service</option>
+                            <option>Wash & Fold</option>
+                            <option>Ironing Service</option>
+                            <option>Dry Cleaning</option>
+                            <option>Linen & Household</option>
+                            <option>Pickup & Delivery</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <input type="date" id="date" name="date" required />
+                        <select id="package" name="package">
+                            <option value="">Select Package</option>
+                            <option>Medium Basket</option>
+                            <option>Large Basket</option>
+                            <option>Launch Special</option>
+                        </select>
+                    </div>
+                    <textarea id="message" name="message" placeholder="Tell us what you need, your address, and any special garment instructions."></textarea>
+                    <div class="form-row">
+                        <button type="button" class="btn btn-whatsapp" id="whatsappBtn">Send via WhatsApp</button>
+                        <button type="button" class="btn btn-primary" id="emailBtn">Send via Email</button>
+                    </div>
+                    <div id="formFeedback" aria-live="polite"></div>
+                </form>
+                <p class="booking-note">
+                    The form validates your details before opening WhatsApp or your email app.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="map">
+        <div class="container">
+            <div class="section-head">
+                <h2>Find Us</h2>
+                <p>Visit our location in Goodwood or open directions in Google Maps.</p>
+            </div>
+
+            <div class="map-grid">
+                <div class="map-card">
+                    <h3>Visit Our Store</h3>
+                    <p>Fresh Laundry is located at 245 Voortrekker Road, Vasco Estate, Goodwood.</p>
+                    <p>Open Google Maps for directions or contact us to arrange pickup and delivery.</p>
+                    <div class="contact-actions">
+                        <a class="btn btn-primary" href="https://maps.google.com/?q=245%20Voortrekker%20Road%2C%20Vasco%20Estate%2C%20Goodwood" target="_blank" rel="noopener noreferrer">Open in Maps</a>
+                    </div>
+                </div>
+                <div class="map-embed">
+                    <iframe
+                        src="https://maps.google.com/maps?q=245%20Voortrekker%20Road%2C%20Vasco%20Estate%2C%20Goodwood&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Fresh Laundry map location"
+                    ></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-head">
+                <h2>Contact Fresh Laundry</h2>
+                <p>Reach out for bookings, pricing questions, pickup requests, or general support.</p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <h3>Let’s Talk</h3>
+                    <p>We’re here to help with your laundry needs and make booking easy.</p>
+                    <div class="contact-links">
+                        <a href="tel:+27753047083">Phone: +27 75 304 7083</a>
+                        <a href="mailto:support.freshlaundry@gmail.com">Email: support.freshlaundry@gmail.com</a>
+                        <a href="https://instagram.com/freshlaundry_ct" target="_blank" rel="noopener noreferrer">Instagram: @freshlaundry_ct</a>
+                    </div>
+                    <div class="contact-actions">
+                        <a class="btn btn-light" href="mailto:support.freshlaundry@gmail.com">Send Email</a>
+                        <a class="btn btn-whatsapp" href="https://wa.me/27753047083" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+                    </div>
+                </div>
+                <div class="contact-card">
+                    <h3>Why Customers Choose Us</h3>
+                    <p>Fresh Laundry combines reliable service, affordable prices, and friendly support in one clean experience.</p>
+                    <p>Whether you need regular weekly laundry or a quick once-off service, we’re ready to help.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image preview">
+        <div class="lightbox-content">
+            <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close image preview">×</button>
+            <img class="lightbox-image" id="lightboxImage" src="" alt="" />
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Fresh Laundry. Clean clothes. Fresh confidence.</p>
+    </footer>
+
+    <script>
+        const bookingForm = document.getElementById('bookingForm');
+        const whatsappBtn = document.getElementById('whatsappBtn');
+        const emailBtn = document.getElementById('emailBtn');
+        const formFeedback = document.getElementById('formFeedback');
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxCaption = document.getElementById('lightboxCaption');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const lightboxTriggers = document.querySelectorAll('.js-lightbox-trigger');
+
+        function clearFeedback() {
+            formFeedback.textContent = '';
+            formFeedback.className = '';
+        }
+
+        function showFeedback(message, type) {
+            formFeedback.textContent = message;
+            formFeedback.className = type === 'success' ? 'success-text' : 'error-text';
+        }
+
+        function clearFieldErrors() {
+            bookingForm.querySelectorAll('.field-error').forEach((field) => field.classList.remove('field-error'));
+        }
+
+        function validateForm() {
+            clearFieldErrors();
+            clearFeedback();
+
+            const name = document.getElementById('name');
+            const phone = document.getElementById('phone');
+            const email = document.getElementById('email');
+            const service = document.getElementById('service');
+            const date = document.getElementById('date');
+
+            const fields = [name, phone, email, service, date];
+            let isValid = true;
+
+            fields.forEach((field) => {
+                if (!field.value.trim()) {
+                    field.classList.add('field-error');
+                    isValid = false;
+                }
+            });
+
+            const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+            if (email.value.trim() && !emailValid) {
+                email.classList.add('field-error');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                showFeedback('Please complete all required fields with valid details.', 'error');
+            }
+
+            return isValid;
+        }
+
+        function buildMessage() {
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const service = document.getElementById('service').value.trim();
+            const date = document.getElementById('date').value.trim();
+            const packageType = document.getElementById('package').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            return [
+                'Fresh Laundry Booking Request',
+                'Name: ' + name,
+                'Phone: ' + phone,
+                'Email: ' + email,
+                'Service: ' + service,
+                'Preferred Date: ' + date,
+                'Package: ' + (packageType || 'Not selected'),
+                'Notes: ' + (message || 'None')
+            ].join('\n');
+        }
+
+        whatsappBtn.addEventListener('click', () => {
+            if (!validateForm()) return;
+            const text = encodeURIComponent(buildMessage());
+            window.open('https://wa.me/27753047083?text=' + text, '_blank', 'noopener');
+            showFeedback('Opening WhatsApp with your booking request.', 'success');
+        });
+
+        emailBtn.addEventListener('click', () => {
+            if (!validateForm()) return;
+            const subject = encodeURIComponent('Fresh Laundry Booking Request');
+            const body = encodeURIComponent(buildMessage());
+            window.location.href = 'mailto:support.freshlaundry@gmail.com?subject=' + subject + '&body=' + body;
+            showFeedback('Opening your email app with your booking request.', 'success');
+        });
+
+        function openLightbox(src, title, description, alt) {
+            lightboxImage.src = src;
+            lightboxImage.alt = alt || title || 'Preview image';
+            lightboxCaption.innerHTML = '<strong>' + (title || 'Image preview') + '</strong><span>' + (description || '') + '</span>';
+            lightbox.classList.add('active');
+            lightbox.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('lightbox-open');
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            lightbox.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('lightbox-open');
+            lightboxImage.src = '';
+            lightboxImage.alt = '';
+            lightboxCaption.innerHTML = '';
+        }
+
+        lightboxTriggers.forEach((trigger) => {
+            trigger.addEventListener('click', (event) => {
+                event.preventDefault();
+                const img = trigger.querySelector('img');
+                openLightbox(
+                    trigger.getAttribute('href'),
+                    trigger.dataset.title,
+                    trigger.dataset.description,
+                    img ? img.getAttribute('alt') : 'Preview image'
+                );
+            });
+        });
+
+        lightboxClose.addEventListener('click', closeLightbox);
+
+        lightbox.addEventListener('click', (event) => {
+            if (event.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+    </script>
 </body>
 </html>
