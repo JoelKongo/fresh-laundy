@@ -6,7 +6,7 @@
     <title>Fresh Laundry | Modern Laundry Services in Goodwood</title>
     <meta
         name="description"
-        content="Fresh Laundry offers modern, reliable, and affordable laundry services in Goodwood, including wash & fold, ironing, dry cleaning, pickup, and delivery."
+        content="Fresh Laundry offers modern, reliable, and affordable laundry services in Goodwood, including wash & fold, ironing, dry cleaning, pickup, delivery, and easy booking."
     />
     <style>
         :root {
@@ -17,7 +17,9 @@
             --text: #1f2937;
             --muted: #6b7280;
             --bg: #f8fbff;
+            --bg-soft: #eef6ff;
             --white: #ffffff;
+            --border: rgba(15, 23, 42, 0.08);
             --card-shadow: 0 12px 30px rgba(11, 94, 215, 0.12);
             --radius: 18px;
             --max-width: 1180px;
@@ -60,7 +62,7 @@
             z-index: 1000;
             background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+            border-bottom: 1px solid var(--border);
         }
 
         .nav-wrap {
@@ -158,6 +160,8 @@
             border-radius: 999px;
             font-weight: 700;
             transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+            border: none;
+            cursor: pointer;
         }
 
         .btn:hover {
@@ -251,7 +255,9 @@
         }
 
         .services-grid,
-        .features-grid {
+        .features-grid,
+        .pricing-grid,
+        .testimonial-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 22px;
@@ -274,11 +280,57 @@
             color: var(--muted);
         }
 
+        .pricing {
+            background: var(--bg-soft);
+        }
+
+        .price-card {
+            position: relative;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 22px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        .price-card.featured {
+            border: 2px solid var(--primary);
+            transform: translateY(-6px);
+        }
+
+        .price-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--primary);
+            color: var(--white);
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .price {
+            font-size: 2rem;
+            color: var(--primary-dark);
+            font-weight: 800;
+            margin: 12px 0;
+        }
+
+        .price-card ul {
+            list-style: none;
+            margin: 18px 0 24px;
+            display: grid;
+            gap: 10px;
+            color: var(--muted);
+        }
+
         .about {
             background: var(--bg);
         }
 
-        .about-grid {
+        .about-grid,
+        .booking-grid {
             display: grid;
             grid-template-columns: 1.1fr 0.9fr;
             gap: 28px;
@@ -306,8 +358,128 @@
             margin-top: 10px;
         }
 
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .gallery-item {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(15, 23, 42, 0.05);
+        }
+
+        .gallery-item img {
+            height: 240px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-caption {
+            padding: 16px 18px;
+        }
+
+        .gallery-caption h3 {
+            color: var(--primary-dark);
+            margin-bottom: 6px;
+        }
+
+        .gallery-caption p {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .testimonial {
+            background: var(--white);
+            padding: 26px;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(15, 23, 42, 0.05);
+        }
+
+        .testimonial p {
+            color: var(--muted);
+            margin-bottom: 14px;
+        }
+
+        .testimonial strong {
+            color: var(--primary-dark);
+        }
+
+        .booking {
+            background: linear-gradient(180deg, #ffffff, #f7fbff);
+        }
+
+        .booking-card,
+        .contact-card {
+            background: var(--white);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .booking-card h3,
+        .contact-card h3 {
+            margin-bottom: 14px;
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .booking-card p,
+        .contact-card p,
+        .contact-card a {
+            color: var(--muted);
+        }
+
+        form {
+            display: grid;
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            font: inherit;
+            color: var(--text);
+            background: #fff;
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .booking-note {
+            margin-top: 16px;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
         .contact {
             background: linear-gradient(135deg, #082f73, #0b5ed7);
+            color: var(--white);
+        }
+
+        .contact .section-head h2,
+        .contact .section-head p,
+        .contact .contact-card h3,
+        .contact .contact-card p,
+        .contact .contact-card a {
             color: var(--white);
         }
 
@@ -321,18 +493,6 @@
         .contact-card {
             background: rgba(255,255,255,0.1);
             border: 1px solid rgba(255,255,255,0.14);
-            border-radius: 24px;
-            padding: 28px;
-        }
-
-        .contact-card h3 {
-            margin-bottom: 14px;
-            font-size: 1.5rem;
-        }
-
-        .contact-card p,
-        .contact-card a {
-            color: rgba(255,255,255,0.94);
         }
 
         .contact-links {
@@ -357,12 +517,12 @@
 
         .btn-light {
             background: var(--white);
-            color: var(--primary-dark);
+            color: var(--primary-dark) !important;
         }
 
         .btn-whatsapp {
             background: #25d366;
-            color: var(--white);
+            color: var(--white) !important;
         }
 
         footer {
@@ -376,7 +536,9 @@
         @media (max-width: 900px) {
             .hero-grid,
             .about-grid,
-            .contact-grid {
+            .booking-grid,
+            .contact-grid,
+            .gallery-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -396,7 +558,8 @@
                 justify-content: flex-start;
             }
 
-            .hero-points {
+            .hero-points,
+            .form-row {
                 grid-template-columns: 1fr;
             }
 
@@ -412,8 +575,10 @@
             <div class="logo">Fresh <span>Laundry</span></div>
             <nav>
                 <a href="#services">Services</a>
-                <a href="#about">About</a>
-                <a href="#why-us">Why Us</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#testimonials">Testimonials</a>
+                <a href="#booking">Booking</a>
                 <a href="#contact">Contact</a>
                 <a class="nav-cta" href="https://wa.me/27753047083" target="_blank" rel="noopener noreferrer">WhatsApp Us</a>
             </nav>
@@ -431,7 +596,7 @@
                     pickup & delivery, Fresh Laundry makes laundry day simple.
                 </p>
                 <div class="hero-actions">
-                    <a href="https://wa.me/27753047083" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+                    <a href="#booking" class="btn btn-primary">Book a Service</a>
                     <a href="https://maps.google.com/?q=245%20Voortrekker%20Road%2C%20Vasco%20Estate%2C%20Goodwood" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">View Location</a>
                 </div>
                 <div class="hero-points">
@@ -501,6 +666,56 @@
         </div>
     </section>
 
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <div class="section-head">
+                <h2>Pricing Packages</h2>
+                <p>
+                    Simple and transparent pricing to suit your laundry needs. Contact us for custom bulk or business pricing.
+                </p>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <h3>Basic Care</h3>
+                    <div class="price">From R80</div>
+                    <p>Ideal for light weekly laundry loads.</p>
+                    <ul>
+                        <li>Wash & fold service</li>
+                        <li>Careful garment handling</li>
+                        <li>Suitable for everyday clothing</li>
+                    </ul>
+                    <a href="#booking" class="btn btn-primary">Choose Package</a>
+                </div>
+
+                <div class="price-card featured">
+                    <div class="price-badge">Popular</div>
+                    <h3>Family Bundle</h3>
+                    <div class="price">From R150</div>
+                    <p>Perfect for households with larger laundry needs.</p>
+                    <ul>
+                        <li>Wash, dry & fold</li>
+                        <li>Includes bedding or towels</li>
+                        <li>Fast turnaround</li>
+                    </ul>
+                    <a href="#booking" class="btn btn-primary">Choose Package</a>
+                </div>
+
+                <div class="price-card">
+                    <h3>Premium Garment Care</h3>
+                    <div class="price">From R220</div>
+                    <p>Best for delicate items, formal wear, and dry cleaning needs.</p>
+                    <ul>
+                        <li>Dry cleaning support</li>
+                        <li>Ironing included</li>
+                        <li>Priority garment care</li>
+                    </ul>
+                    <a href="#booking" class="btn btn-primary">Choose Package</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="about" class="about">
         <div class="container about-grid">
             <div class="about-text">
@@ -526,6 +741,39 @@
                     <li>Affordable solutions for homes and small businesses</li>
                     <li>Convenient pickup and delivery options</li>
                 </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="container">
+            <div class="section-head">
+                <h2>Gallery</h2>
+                <p>Take a look at the clean, fresh, and professional experience we offer.</p>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&w=900&q=80" alt="Freshly folded laundry" />
+                    <div class="gallery-caption">
+                        <h3>Freshly Folded Laundry</h3>
+                        <p>Neat, clean, and ready for pickup or delivery.</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1521656693074-0ef32e80a5d5?auto=format&fit=crop&w=900&q=80" alt="Laundry machines in service" />
+                    <div class="gallery-caption">
+                        <h3>Professional Cleaning Process</h3>
+                        <p>Reliable equipment and careful handling for every load.</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?auto=format&fit=crop&w=900&q=80" alt="Clean clothes ready to wear" />
+                    <div class="gallery-caption">
+                        <h3>Ready-to-Wear Results</h3>
+                        <p>Perfect for busy families, professionals, and small businesses.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -556,6 +804,86 @@
                     <h3>Friendly Service</h3>
                     <p>Our team is committed to making laundry simple and stress-free.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="pricing">
+        <div class="container">
+            <div class="section-head">
+                <h2>What Our Customers Say</h2>
+                <p>We are proud to provide trusted service that keeps customers coming back.</p>
+            </div>
+
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <p>“Fresh Laundry always delivers on time, and my clothes come back spotless and neatly folded.”</p>
+                    <strong>— Nandi M.</strong>
+                </div>
+                <div class="testimonial">
+                    <p>“Their pickup and delivery service makes life so much easier. Friendly team and great quality.”</p>
+                    <strong>— Jason R.</strong>
+                </div>
+                <div class="testimonial">
+                    <p>“I trust them with delicate garments and bedding. The service is professional and affordable.”</p>
+                    <strong>— Fatima K.</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="booking" class="booking">
+        <div class="container booking-grid">
+            <div>
+                <div class="section-head" style="text-align:left; margin:0 0 20px;">
+                    <h2>Book a Service</h2>
+                    <p>Send your booking request and we will get back to you to confirm the details.</p>
+                </div>
+                <div class="about-box">
+                    <h3 style="margin-bottom:14px; color: var(--primary-dark);">Why Book With Us?</h3>
+                    <ul>
+                        <li>Quick response for booking requests</li>
+                        <li>Flexible options for pickup and drop-off</li>
+                        <li>Packages for individuals, families, and businesses</li>
+                        <li>Direct support on WhatsApp for urgent requests</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="booking-card">
+                <h3>Booking Form</h3>
+                <p>Fill in your details below to request a laundry service.</p>
+                <form>
+                    <div class="form-row">
+                        <input type="text" name="name" placeholder="Full Name" required />
+                        <input type="tel" name="phone" placeholder="Phone Number" required />
+                    </div>
+                    <div class="form-row">
+                        <input type="email" name="email" placeholder="Email Address" required />
+                        <select name="service" required>
+                            <option value="">Select Service</option>
+                            <option>Wash & Fold</option>
+                            <option>Ironing Service</option>
+                            <option>Dry Cleaning</option>
+                            <option>Linen & Household</option>
+                            <option>Pickup & Delivery</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <input type="date" name="date" required />
+                        <select name="package">
+                            <option value="">Select Package</option>
+                            <option>Basic Care</option>
+                            <option>Family Bundle</option>
+                            <option>Premium Garment Care</option>
+                        </select>
+                    </div>
+                    <textarea name="message" placeholder="Tell us what you need, your address, and any special garment instructions."></textarea>
+                    <button type="submit" class="btn btn-primary">Send Booking Request</button>
+                </form>
+                <p class="booking-note">
+                    Prefer a faster response? <a href="https://wa.me/27753047083" target="_blank" rel="noopener noreferrer">Message us on WhatsApp</a>.
+                </p>
             </div>
         </div>
     </section>
