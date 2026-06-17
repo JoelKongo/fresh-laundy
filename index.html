@@ -76,10 +76,21 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             font-size: 1.7rem;
             font-weight: 800;
             color: var(--primary-dark);
             letter-spacing: -0.5px;
+        }
+
+        .logo img {
+            width: 54px;
+            height: 54px;
+            object-fit: contain;
+            border-radius: 50%;
+            box-shadow: 0 6px 20px rgba(11, 94, 215, 0.18);
         }
 
         .logo span {
@@ -610,13 +621,25 @@
             .section-head h2 {
                 font-size: 1.8rem;
             }
+
+            .logo {
+                font-size: 1.35rem;
+            }
+
+            .logo img {
+                width: 46px;
+                height: 46px;
+            }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="container nav-wrap">
-            <div class="logo">Fresh <span>Laundry</span></div>
+            <div class="logo">
+                <img src="![image1](image1)" alt="Fresh Laundry logo" />
+                <div>Fresh <span>Laundry</span></div>
+            </div>
             <nav>
                 <a href="#services">Services</a>
                 <a href="#pricing">Pricing</a>
@@ -1014,7 +1037,6 @@
         const whatsappBtn = document.getElementById('whatsappBtn');
         const emailBtn = document.getElementById('emailBtn');
         const feedback = document.getElementById('formFeedback');
-        const fields = ['name', 'phone', 'email', 'service', 'date'];
 
         function clearErrors() {
             feedback.innerHTML = '';
