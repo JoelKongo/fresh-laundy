@@ -23,7 +23,6 @@
             --border: rgba(15, 47, 109, 0.12);
             --card-shadow: 0 14px 30px rgba(15, 47, 109, 0.12);
             --radius: 22px;
-            --max-width: 1180px;
             --danger: #dc2626;
             --success: #15803d;
         }
@@ -286,7 +285,8 @@
         .features-grid,
         .pricing-grid,
         .testimonial-grid,
-        .image-feature-grid {
+        .image-feature-grid,
+        .flyer-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 22px;
@@ -392,11 +392,15 @@
             margin-top: 10px;
         }
 
-        .gallery-grid,
-        .flyer-grid {
+        .gallery-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 18px;
+        }
+
+        .flyer-link {
+            display: block;
+            color: inherit;
         }
 
         .gallery-item,
@@ -406,6 +410,13 @@
             overflow: hidden;
             box-shadow: var(--card-shadow);
             border: 1px solid rgba(15, 47, 109, 0.05);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .gallery-item:hover,
+        .flyer-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 36px rgba(15, 47, 109, 0.18);
         }
 
         .gallery-item img,
@@ -421,6 +432,34 @@
         .flyer-item img {
             height: auto;
             background: #fff;
+        }
+
+        .flyer-caption-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .flyer-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: var(--secondary-soft);
+            color: var(--primary);
+            font-size: 0.82rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .flyer-cta {
+            display: inline-block;
+            margin-top: 14px;
+            color: var(--primary);
+            font-weight: 700;
         }
 
         .gallery-caption,
@@ -650,8 +689,17 @@
             }
 
             .hero-points,
-            .form-row {
+            .form-row,
+            .flyer-caption-top {
                 grid-template-columns: 1fr;
+            }
+
+            .flyer-caption-top {
+                display: block;
+            }
+
+            .flyer-tag {
+                margin-top: 8px;
             }
 
             .section-head h2 {
@@ -739,23 +787,35 @@
         <div class="container">
             <div class="section-head">
                 <h2>Our Brand Flyers</h2>
-                <p>We matched the site colors to the flyer palette and added both flyer designs to the website.</p>
+                <p>Browse our latest service and pricing flyers. Tap or click any flyer to open the full-size version.</p>
             </div>
 
             <div class="flyer-grid">
                 <div class="flyer-item">
-                    <img src="assets/flyer-services.jpg" alt="Fresh Laundry promotional flyer" />
-                    <div class="flyer-caption">
-                        <h3>Promotional Flyer</h3>
-                        <p>Highlights our services, why customers choose us, and our contact details.</p>
-                    </div>
+                    <a class="flyer-link" href="assets/flyer-services.jpg" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/flyer-services.jpg" alt="Fresh Laundry promotional flyer" />
+                        <div class="flyer-caption">
+                            <div class="flyer-caption-top">
+                                <h3>Promotional Flyer</h3>
+                                <span class="flyer-tag">Services</span>
+                            </div>
+                            <p>Highlights our services, why customers choose us, and our contact details.</p>
+                            <span class="flyer-cta">Open full size →</span>
+                        </div>
+                    </a>
                 </div>
                 <div class="flyer-item">
-                    <img src="assets/flyer-prices.jpeg" alt="Fresh Laundry price list flyer" />
-                    <div class="flyer-caption">
-                        <h3>Laundry Price List</h3>
-                        <p>Showcases basket pricing, ironing add-ons, and launch specials.</p>
-                    </div>
+                    <a class="flyer-link" href="assets/flyer-prices.jpeg" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/flyer-prices.jpeg" alt="Fresh Laundry price list flyer" />
+                        <div class="flyer-caption">
+                            <div class="flyer-caption-top">
+                                <h3>Laundry Price List</h3>
+                                <span class="flyer-tag">Pricing</span>
+                            </div>
+                            <p>Showcases basket pricing, ironing add-ons, and launch specials.</p>
+                            <span class="flyer-cta">Open full size →</span>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
