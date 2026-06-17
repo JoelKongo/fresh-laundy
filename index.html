@@ -10,18 +10,19 @@
     />
     <style>
         :root {
-            --primary: #0b5ed7;
-            --primary-dark: #083b8a;
-            --accent: #22c55e;
-            --accent-dark: #16a34a;
-            --text: #1f2937;
-            --muted: #6b7280;
-            --bg: #f8fbff;
-            --bg-soft: #eef6ff;
+            --primary: #0f2f6d;
+            --primary-dark: #0a2352;
+            --secondary: #4ea3e8;
+            --secondary-soft: #dff0ff;
+            --accent: #6ebcf4;
+            --text: #173057;
+            --muted: #5d6f89;
+            --bg: #f7fbff;
+            --bg-soft: #eaf5ff;
             --white: #ffffff;
-            --border: rgba(15, 23, 42, 0.08);
-            --card-shadow: 0 12px 30px rgba(11, 94, 215, 0.12);
-            --radius: 18px;
+            --border: rgba(15, 47, 109, 0.12);
+            --card-shadow: 0 14px 30px rgba(15, 47, 109, 0.12);
+            --radius: 22px;
             --max-width: 1180px;
             --danger: #dc2626;
             --success: #15803d;
@@ -40,7 +41,7 @@
         body {
             font-family: Arial, sans-serif;
             color: var(--text);
-            background: var(--white);
+            background: linear-gradient(180deg, #ffffff 0%, #f5fbff 100%);
             line-height: 1.6;
         }
 
@@ -62,7 +63,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border);
         }
@@ -90,11 +91,12 @@
             height: 54px;
             object-fit: contain;
             border-radius: 50%;
-            box-shadow: 0 6px 20px rgba(11, 94, 215, 0.18);
+            box-shadow: 0 6px 20px rgba(78, 163, 232, 0.25);
+            background: #fff;
         }
 
         .logo span {
-            color: var(--accent);
+            color: var(--secondary);
         }
 
         nav {
@@ -106,16 +108,16 @@
 
         nav a {
             color: var(--text);
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.95rem;
         }
 
         nav a:hover {
-            color: var(--primary);
+            color: var(--secondary);
         }
 
         .nav-cta {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--secondary), #74bdf1);
             color: var(--white);
             padding: 12px 18px;
             border-radius: 999px;
@@ -124,10 +126,23 @@
 
         .hero {
             background:
-                linear-gradient(135deg, rgba(8, 59, 138, 0.9), rgba(11, 94, 215, 0.72)),
+                linear-gradient(135deg, rgba(15, 47, 109, 0.92), rgba(78, 163, 232, 0.62)),
                 url('https://images.unsplash.com/photo-1582735689369-4fe89db7114c?auto=format&fit=crop&w=1600&q=80') center/cover;
             color: var(--white);
             padding: 90px 0 70px;
+            position: relative;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 26px;
+            background: linear-gradient(90deg, #d9edff, #bfe3ff, #d9edff);
+            border-top-left-radius: 40px;
+            border-top-right-radius: 40px;
         }
 
         .hero-grid {
@@ -139,8 +154,8 @@
 
         .hero-badge {
             display: inline-block;
-            background: rgba(255,255,255,0.14);
-            border: 1px solid rgba(255,255,255,0.24);
+            background: rgba(255,255,255,0.16);
+            border: 1px solid rgba(255,255,255,0.3);
             padding: 10px 16px;
             border-radius: 999px;
             margin-bottom: 18px;
@@ -156,7 +171,7 @@
         .hero p {
             font-size: 1.08rem;
             max-width: 620px;
-            color: rgba(255,255,255,0.92);
+            color: rgba(255,255,255,0.94);
             margin-bottom: 28px;
         }
 
@@ -183,14 +198,14 @@
         }
 
         .btn-primary {
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--secondary), #74bdf1);
             color: var(--white);
         }
 
         .btn-secondary {
-            background: rgba(255,255,255,0.16);
+            background: rgba(255,255,255,0.18);
             color: var(--white);
-            border: 1px solid rgba(255,255,255,0.24);
+            border: 1px solid rgba(255,255,255,0.28);
         }
 
         .hero-points {
@@ -201,8 +216,8 @@
 
         .hero-point {
             background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.16);
-            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 18px;
             padding: 16px;
             text-align: center;
         }
@@ -213,8 +228,8 @@
         }
 
         .hero-card {
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255,255,255,0.2);
             border-radius: 24px;
             padding: 28px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.16);
@@ -270,30 +285,35 @@
         .services-grid,
         .features-grid,
         .pricing-grid,
-        .testimonial-grid {
+        .testimonial-grid,
+        .image-feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 22px;
         }
 
-        .card {
+        .card,
+        .image-card {
             background: var(--white);
             padding: 28px;
             border-radius: var(--radius);
             box-shadow: var(--card-shadow);
-            border: 1px solid rgba(15, 23, 42, 0.05);
+            border: 1px solid rgba(15, 47, 109, 0.06);
         }
 
-        .card h3 {
+        .card h3,
+        .image-card h3 {
             color: var(--primary-dark);
             margin-bottom: 10px;
         }
 
-        .card p {
+        .card p,
+        .image-card p {
             color: var(--muted);
         }
 
-        .pricing {
+        .pricing,
+        .flyer-section {
             background: var(--bg-soft);
         }
 
@@ -303,7 +323,7 @@
             padding: 30px;
             border-radius: 22px;
             box-shadow: var(--card-shadow);
-            border: 1px solid rgba(15, 23, 42, 0.06);
+            border: 1px solid rgba(15, 47, 109, 0.08);
         }
 
         .price-card.featured {
@@ -356,10 +376,11 @@
         }
 
         .about-box {
-            background: linear-gradient(180deg, #ffffff, #eef6ff);
+            background: linear-gradient(180deg, #ffffff, #edf7ff);
             border-radius: 24px;
             padding: 28px;
             box-shadow: var(--card-shadow);
+            border: 1px solid rgba(78, 163, 232, 0.12);
         }
 
         .about-box ul {
@@ -371,36 +392,50 @@
             margin-top: 10px;
         }
 
-        .gallery-grid {
+        .gallery-grid,
+        .flyer-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 18px;
         }
 
-        .gallery-item {
+        .gallery-item,
+        .flyer-item {
             background: var(--white);
             border-radius: 20px;
             overflow: hidden;
             box-shadow: var(--card-shadow);
-            border: 1px solid rgba(15, 23, 42, 0.05);
+            border: 1px solid rgba(15, 47, 109, 0.05);
         }
 
-        .gallery-item img {
-            height: 240px;
+        .gallery-item img,
+        .flyer-item img {
             width: 100%;
             object-fit: cover;
         }
 
-        .gallery-caption {
+        .gallery-item img {
+            height: 240px;
+        }
+
+        .flyer-item img {
+            height: auto;
+            background: #fff;
+        }
+
+        .gallery-caption,
+        .flyer-caption {
             padding: 16px 18px;
         }
 
-        .gallery-caption h3 {
+        .gallery-caption h3,
+        .flyer-caption h3 {
             color: var(--primary-dark);
             margin-bottom: 6px;
         }
 
-        .gallery-caption p {
+        .gallery-caption p,
+        .flyer-caption p {
             color: var(--muted);
             font-size: 0.95rem;
         }
@@ -410,7 +445,7 @@
             padding: 26px;
             border-radius: 20px;
             box-shadow: var(--card-shadow);
-            border: 1px solid rgba(15, 23, 42, 0.05);
+            border: 1px solid rgba(15, 47, 109, 0.05);
         }
 
         .testimonial p {
@@ -423,14 +458,14 @@
         }
 
         .booking {
-            background: linear-gradient(180deg, #ffffff, #f7fbff);
+            background: linear-gradient(180deg, #ffffff, #f3faff);
         }
 
         .booking-card,
         .contact-card,
         .map-card {
             background: var(--white);
-            border: 1px solid rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(15, 47, 109, 0.08);
             border-radius: 24px;
             padding: 28px;
             box-shadow: var(--card-shadow);
@@ -469,7 +504,7 @@
             width: 100%;
             padding: 14px 16px;
             border-radius: 14px;
-            border: 1px solid rgba(15, 23, 42, 0.12);
+            border: 1px solid rgba(15, 47, 109, 0.15);
             font: inherit;
             color: var(--text);
             background: #fff;
@@ -478,8 +513,8 @@
         input:focus,
         select:focus,
         textarea:focus {
-            outline: 2px solid rgba(11, 94, 215, 0.2);
-            border-color: var(--primary);
+            outline: 2px solid rgba(78, 163, 232, 0.22);
+            border-color: var(--secondary);
         }
 
         .field-error {
@@ -521,7 +556,7 @@
         .map-embed {
             overflow: hidden;
             border-radius: 18px;
-            border: 1px solid rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(15, 47, 109, 0.08);
             min-height: 320px;
         }
 
@@ -532,7 +567,7 @@
         }
 
         .contact {
-            background: linear-gradient(135deg, #082f73, #0b5ed7);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
             color: var(--white);
         }
 
@@ -580,7 +615,7 @@
         }
 
         footer {
-            background: #041c44;
+            background: #0a2352;
             color: rgba(255,255,255,0.9);
             text-align: center;
             padding: 22px 16px;
@@ -593,7 +628,8 @@
             .booking-grid,
             .map-grid,
             .contact-grid,
-            .gallery-grid {
+            .gallery-grid,
+            .flyer-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -643,6 +679,7 @@
             <nav>
                 <a href="#services">Services</a>
                 <a href="#pricing">Pricing</a>
+                <a href="#flyers">Flyers</a>
                 <a href="#gallery">Gallery</a>
                 <a href="#testimonials">Testimonials</a>
                 <a href="#booking">Booking</a>
@@ -656,38 +693,37 @@
     <section class="hero">
         <div class="container hero-grid">
             <div>
-                <div class="hero-badge">Professional Laundry Services in Goodwood</div>
-                <h1>Clean Clothes. Fresh Confidence.</h1>
+                <div class="hero-badge">Clean Clothes. Fresh Confidence.</div>
+                <h1>Reliable Laundry Care You Can Trust.</h1>
                 <p>
-                    Fast, affordable, and reliable laundry care for individuals,
-                    families, and businesses. From wash & fold to dry cleaning and
-                    pickup & delivery, Fresh Laundry makes laundry day simple.
+                    Inspired by our flyer branding, Fresh Laundry brings together clean design,
+                    affordable service, and trusted garment care for homes, families, and businesses in Goodwood.
                 </p>
                 <div class="hero-actions">
                     <a href="#booking" class="btn btn-primary">Book a Service</a>
-                    <a href="https://maps.google.com/?q=245%20Voortrekker%20Road%2C%20Vasco%20Estate%2C%20Goodwood" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">View Location</a>
+                    <a href="#pricing" class="btn btn-secondary">View Price List</a>
                 </div>
                 <div class="hero-points">
+                    <div class="hero-point">
+                        <strong>Quality</strong>
+                        Care
+                    </div>
                     <div class="hero-point">
                         <strong>Fast</strong>
                         Turnaround
                     </div>
                     <div class="hero-point">
-                        <strong>Affordable</strong>
-                        Pricing
-                    </div>
-                    <div class="hero-point">
-                        <strong>Trusted</strong>
-                        Garment Care
+                        <strong>Pickup</strong>
+                        Delivery
                     </div>
                 </div>
             </div>
 
             <div class="hero-card">
-                <h3>Book Your Laundry Service</h3>
+                <h3>Fresh Laundry at a Glance</h3>
                 <p>
-                    Need help with weekly laundry, ironing, bedding, or delicate garments?
-                    Contact us today and let us handle the hard work.
+                    From wash & fold to ironing, dry cleaning, and household linen care,
+                    we make laundry simple, professional, and affordable.
                 </p>
                 <ul class="contact-list">
                     <li><strong>Phone:</strong> <a href="tel:+27753047083">+27 75 304 7083</a></li>
@@ -699,13 +735,38 @@
         </div>
     </section>
 
+    <section id="flyers" class="flyer-section">
+        <div class="container">
+            <div class="section-head">
+                <h2>Our Brand Flyers</h2>
+                <p>We matched the site colors to the flyer palette and added both flyer designs to the website.</p>
+            </div>
+
+            <div class="flyer-grid">
+                <div class="flyer-item">
+                    <img src="![image2](image2)" alt="Fresh Laundry promotional flyer" />
+                    <div class="flyer-caption">
+                        <h3>Promotional Flyer</h3>
+                        <p>Highlights our services, why customers choose us, and our contact details.</p>
+                    </div>
+                </div>
+                <div class="flyer-item">
+                    <img src="![image1](image1)" alt="Fresh Laundry price list flyer" />
+                    <div class="flyer-caption">
+                        <h3>Laundry Price List</h3>
+                        <p>Showcases basket pricing, ironing add-ons, and launch specials.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="services">
         <div class="container">
             <div class="section-head">
                 <h2>Our Services</h2>
                 <p>
-                    We provide high-quality laundry and garment care services designed
-                    to save you time and keep your clothes looking their best.
+                    Quality service inspired by the same clean, trustworthy feel of our flyer branding.
                 </p>
             </div>
 
@@ -716,19 +777,19 @@
                 </div>
                 <div class="card">
                     <h3>Ironing Service</h3>
-                    <p>Crisp, wrinkle-free garments that are fresh and ready to wear.</p>
+                    <p>Neat, crisp garments finished wrinkle-free and ready to wear.</p>
                 </div>
                 <div class="card">
                     <h3>Dry Cleaning</h3>
-                    <p>Special care for delicate fabrics, office wear, and formal garments.</p>
+                    <p>Gentle care for delicate fabrics, formal wear, and special garments.</p>
                 </div>
                 <div class="card">
                     <h3>Linen & Household</h3>
-                    <p>Bedding, curtains, blankets, and household items cleaned with care.</p>
+                    <p>From bedding to curtains, we’ve got your household fabrics covered.</p>
                 </div>
                 <div class="card">
                     <h3>Pickup & Delivery</h3>
-                    <p>Convenient collection and delivery service right to your doorstep.</p>
+                    <p>Convenient collection and delivery for busy homes and professionals.</p>
                 </div>
             </div>
         </div>
@@ -739,46 +800,46 @@
             <div class="section-head">
                 <h2>Pricing Packages</h2>
                 <p>
-                    Simple and transparent pricing to suit your laundry needs. Contact us for custom bulk or business pricing.
+                    Updated to reflect the flyer pricing style and launch special theme.
                 </p>
             </div>
 
             <div class="pricing-grid">
                 <div class="price-card">
-                    <h3>Basic Care</h3>
-                    <div class="price">From R80</div>
-                    <p>Ideal for light weekly laundry loads.</p>
+                    <h3>Medium Basket</h3>
+                    <div class="price">R100</div>
+                    <p>Ideal for small to medium weekly laundry loads.</p>
                     <ul>
-                        <li>Wash & fold service</li>
-                        <li>Careful garment handling</li>
-                        <li>Suitable for everyday clothing</li>
+                        <li>Wash & Fold — R100</li>
+                        <li>Ironing add-on — +R30</li>
+                        <li>Wash, Fold & Iron — R130</li>
                     </ul>
                     <a href="#booking" class="btn btn-primary">Choose Package</a>
                 </div>
 
                 <div class="price-card featured">
                     <div class="price-badge">Popular</div>
-                    <h3>Family Bundle</h3>
-                    <div class="price">From R150</div>
-                    <p>Perfect for households with larger laundry needs.</p>
+                    <h3>Large Basket</h3>
+                    <div class="price">R150</div>
+                    <p>Best for larger household laundry needs.</p>
                     <ul>
-                        <li>Wash, dry & fold</li>
-                        <li>Includes bedding or towels</li>
-                        <li>Fast turnaround</li>
+                        <li>Wash & Fold — R150</li>
+                        <li>Ironing add-on — +R50</li>
+                        <li>Wash, Fold & Iron — R200</li>
                     </ul>
                     <a href="#booking" class="btn btn-primary">Choose Package</a>
                 </div>
 
                 <div class="price-card">
-                    <h3>Premium Garment Care</h3>
-                    <div class="price">From R220</div>
-                    <p>Best for delicate items, formal wear, and dry cleaning needs.</p>
+                    <h3>Launch Special</h3>
+                    <div class="price">From R100</div>
+                    <p>Special first-load promotion for new customers.</p>
                     <ul>
-                        <li>Dry cleaning support</li>
-                        <li>Ironing included</li>
-                        <li>Priority garment care</li>
+                        <li>Medium Basket Wash, Fold & Iron — R100</li>
+                        <li>Large Basket Wash, Fold & Iron — R150</li>
+                        <li>Limited launch special pricing</li>
                     </ul>
-                    <a href="#booking" class="btn btn-primary">Choose Package</a>
+                    <a href="#booking" class="btn btn-primary">Claim Special</a>
                 </div>
             </div>
         </div>
@@ -789,25 +850,24 @@
             <div class="about-text">
                 <div class="section-head" style="text-align:left; margin:0 0 20px;">
                     <h2>About Fresh Laundry</h2>
-                    <p>Trusted laundry and dry-cleaning service in Goodwood and surrounding areas.</p>
+                    <p>Clean clothes. Fresh confidence. Clean you can trust.</p>
                 </div>
                 <p>
-                    Fresh Laundry is committed to delivering dependable laundry solutions
-                    with excellent customer service, careful garment handling, and practical pricing.
+                    Fresh Laundry is a trusted laundry and dry-cleaning service serving Goodwood and surrounding areas.
+                    We focus on quality care, fast turnaround, friendly service, and convenient support.
                 </p>
                 <p>
-                    Whether you need weekly laundry support, work uniform cleaning,
-                    linen care, or delicate garment treatment, we make sure each item is
-                    returned fresh, clean, and ready to use.
+                    Whether it’s weekly laundry, work uniforms, bedding, or delicate garments,
+                    every item is handled with care and returned fresh, clean, and ready to use.
                 </p>
             </div>
             <div class="about-box">
-                <h3 style="margin-bottom:14px; color: var(--primary-dark);">What You Can Expect</h3>
+                <h3 style="margin-bottom:14px; color: var(--primary-dark);">Why Choose Us?</h3>
                 <ul>
-                    <li>Professional care for every load</li>
-                    <li>Friendly and responsive customer service</li>
-                    <li>Affordable solutions for homes and small businesses</li>
-                    <li>Convenient pickup and delivery options</li>
+                    <li>Quality care — we treat every item like our own</li>
+                    <li>Affordable prices without the premium price</li>
+                    <li>Fast turnaround when you need it most</li>
+                    <li>Friendly service that makes life easier</li>
                 </ul>
             </div>
         </div>
@@ -841,36 +901,6 @@
                         <h3>Ready-to-Wear Results</h3>
                         <p>Perfect for busy families, professionals, and small businesses.</p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="why-us">
-        <div class="container">
-            <div class="section-head">
-                <h2>Why Choose Us?</h2>
-                <p>
-                    We combine attention to detail, speed, and convenience to give you a better laundry experience.
-                </p>
-            </div>
-
-            <div class="features-grid">
-                <div class="card">
-                    <h3>Quality Care</h3>
-                    <p>Every item is treated with attention, care, and professional handling.</p>
-                </div>
-                <div class="card">
-                    <h3>Affordable Prices</h3>
-                    <p>Premium-looking results without premium pricing.</p>
-                </div>
-                <div class="card">
-                    <h3>Fast Turnaround</h3>
-                    <p>Quick and reliable service for busy schedules and urgent needs.</p>
-                </div>
-                <div class="card">
-                    <h3>Friendly Service</h3>
-                    <p>Our team is committed to making laundry simple and stress-free.</p>
                 </div>
             </div>
         </div>
@@ -941,9 +971,9 @@
                         <input type="date" id="date" name="date" required />
                         <select id="package" name="package">
                             <option value="">Select Package</option>
-                            <option>Basic Care</option>
-                            <option>Family Bundle</option>
-                            <option>Premium Garment Care</option>
+                            <option>Medium Basket</option>
+                            <option>Large Basket</option>
+                            <option>Launch Special</option>
                         </select>
                     </div>
                     <textarea id="message" name="message" placeholder="Tell us what you need, your address, and any special garment instructions."></textarea>
@@ -1029,7 +1059,7 @@
     </section>
 
     <footer>
-        <p>© 2026 Fresh Laundry. We Clean. You Live.</p>
+        <p>© 2026 Fresh Laundry. We clean. You live.</p>
     </footer>
 
     <script>
