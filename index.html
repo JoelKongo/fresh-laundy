@@ -207,7 +207,8 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: min(92vw, 430px);
+            width: 430px;
+            max-width: calc(100vw - 24px);
             height: 100vh;
             padding: 24px 20px 24px;
             background: rgba(255, 255, 255, 0.98);
@@ -332,6 +333,12 @@
             color: var(--white);
         }
 
+        .nav-book-btn {
+            margin-top: 8px;
+            background: linear-gradient(135deg, #25d366, #1fb655);
+            color: var(--white);
+        }
+
         .nav-contact {
             margin-top: 18px;
             padding: 18px;
@@ -367,10 +374,26 @@
             border: 1px solid rgba(15, 47, 109, 0.08);
             box-shadow: none;
             font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .nav-contact-links a:hover {
             transform: translateY(-1px);
+        }
+
+        .nav-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--secondary-soft);
+            color: var(--primary-dark);
+            flex-shrink: 0;
+            font-size: 0.95rem;
         }
 
         .hours-banner {
@@ -1075,6 +1098,7 @@
 
             nav {
                 width: min(92vw, 360px);
+                max-width: calc(100vw - 16px);
             }
 
             .hero-points,
@@ -1155,13 +1179,14 @@
                 <a href="#map">Location</a>
                 <a href="#contact">Contact</a>
                 <a class="nav-cta" href="https://wa.me/27753047083" target="_blank" rel="noopener noreferrer">WhatsApp Us</a>
+                <a class="nav-book-btn" href="#booking">Book Now</a>
                 <div class="nav-contact">
                     <h4>Contact Fresh Laundry</h4>
                     <p>Need quick help with bookings, pickups, or pricing? Reach us directly below.</p>
                     <div class="nav-contact-links">
-                        <a href="tel:+27753047083">Phone: +27 75 304 7083</a>
-                        <a href="mailto:support.freshlaundry@gmail.com">Email: support.freshlaundry@gmail.com</a>
-                        <a href="https://instagram.com/freshlaundry_ct" target="_blank" rel="noopener noreferrer">Instagram: @freshlaundry_ct</a>
+                        <a href="tel:+27753047083"><span class="nav-icon" aria-hidden="true">☎</span><span>Phone: +27 75 304 7083</span></a>
+                        <a href="mailto:support.freshlaundry@gmail.com"><span class="nav-icon" aria-hidden="true">✉</span><span>Email: support.freshlaundry@gmail.com</span></a>
+                        <a href="https://instagram.com/freshlaundry_ct" target="_blank" rel="noopener noreferrer"><span class="nav-icon" aria-hidden="true">◎</span><span>Instagram: @freshlaundry_ct</span></a>
                     </div>
                 </div>
             </nav>
